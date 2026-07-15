@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Environment Variables
+.env
+
+# Logs
+logs
+*.log
+
+# Build
+dist/
+build/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# Coverage
+coverage/
+
+# Uploads
+server/uploads/
+
+# Misc
+.idea/
