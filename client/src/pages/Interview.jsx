@@ -1,248 +1,264 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Interview() {
+  const [interviewType, setInterviewType] = useState("technical");
+  const [difficulty, setDifficulty] = useState("medium");
+  const [questionCount, setQuestionCount] = useState("10");
+
+  const OptionCard = ({ value, selected, onClick, title, description }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`w-full rounded-lg border p-3 text-left transition ${
+        selected
+          ? "border-slate-900 bg-slate-50"
+          : "border-slate-200 bg-white hover:border-slate-300"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold text-slate-800">{title}</p>
+
+          <p className="mt-1 text-[10px] leading-4 text-slate-400">
+            {description}
+          </p>
+        </div>
+
+        <div
+          className={`mt-0.5 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border ${
+            selected ? "border-slate-900" : "border-slate-300"
+          }`}
+        >
+          {selected && (
+            <div className="h-1.5 w-1.5 rounded-full bg-slate-900" />
+          )}
+        </div>
+      </div>
+    </button>
+  );
+
   return (
-    <>
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <main className="min-h-screen bg-slate-50">
-        <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
+      <main>
+        <div className="mx-auto max-w-5xl px-5 py-6">
           {/* Header */}
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium text-slate-500">
-              Interview Setup
+          <div>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              Interview
             </p>
 
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-              Configure your interview
+            <h1 className="mt-1 text-lg font-semibold text-slate-900">
+              Interview Setup
             </h1>
 
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-              Choose the interview type and difficulty that best matches the
-              role you're preparing for.
+            <p className="mt-1 text-xs text-slate-500">
+              Configure your mock interview before you begin.
             </p>
           </div>
 
-          {/* Setup Card */}
-          <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+          {/* Content */}
+          <div className="mt-5 grid gap-4 lg:grid-cols-3">
             {/* Interview Type */}
-            <div>
-              <h2 className="text-lg font-semibold text-slate-900">
-                Interview Type
-              </h2>
+            <section className="rounded-lg border border-slate-200 bg-white p-4 lg:col-span-2">
+              <div>
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Interview Type
+                </h2>
 
-              <p className="mt-1 text-sm text-slate-500">
-                What kind of interview do you want to practice?
-              </p>
+                <p className="mt-0.5 text-[10px] text-slate-400">
+                  Choose the type of questions you want to practice.
+                </p>
+              </div>
 
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
-                <button
-                  type="button"
-                  className="rounded-2xl border-2 border-slate-900 bg-slate-50 p-6 text-left"
-                >
+              <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                <OptionCard
+                  value="technical"
+                  selected={interviewType === "technical"}
+                  onClick={() => setInterviewType("technical")}
+                  title="Technical"
+                  description="DSA, programming, CS fundamentals and technical concepts."
+                />
+
+                <OptionCard
+                  value="behavioral"
+                  selected={interviewType === "behavioral"}
+                  onClick={() => setInterviewType("behavioral")}
+                  title="Behavioral"
+                  description="HR, teamwork, communication and situational questions."
+                />
+
+                <OptionCard
+                  value="mixed"
+                  selected={interviewType === "mixed"}
+                  onClick={() => setInterviewType("mixed")}
+                  title="Mixed"
+                  description="A combination of technical and behavioral questions."
+                />
+              </div>
+
+              {/* Difficulty */}
+              <div className="mt-6">
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Difficulty
+                </h2>
+
+                <p className="mt-0.5 text-[10px] text-slate-400">
+                  Select the difficulty level for your interview.
+                </p>
+
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  <OptionCard
+                    value="easy"
+                    selected={difficulty === "easy"}
+                    onClick={() => setDifficulty("easy")}
+                    title="Easy"
+                    description="Fundamental concepts"
+                  />
+
+                  <OptionCard
+                    value="medium"
+                    selected={difficulty === "medium"}
+                    onClick={() => setDifficulty("medium")}
+                    title="Medium"
+                    description="Interview-level questions"
+                  />
+
+                  <OptionCard
+                    value="hard"
+                    selected={difficulty === "hard"}
+                    onClick={() => setDifficulty("hard")}
+                    title="Hard"
+                    description="Advanced problem solving"
+                  />
+                </div>
+              </div>
+
+              {/* Question Count */}
+              <div className="mt-6">
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Number of Questions
+                </h2>
+
+                <div className="mt-3 flex gap-2">
+                  {["5", "10", "15", "20"].map((count) => (
+                    <button
+                      key={count}
+                      type="button"
+                      onClick={() => setQuestionCount(count)}
+                      className={`rounded-md border px-4 py-2 text-[11px] font-medium transition ${
+                        questionCount === count
+                          ? "border-slate-900 bg-slate-50 text-slate-900"
+                          : "border-slate-200 bg-white text-slate-500 hover:border-slate-300"
+                      }`}
+                    >
+                      {count}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Summary */}
+            <aside className="flex flex-col gap-3">
+              <section className="rounded-lg border border-slate-200 bg-white p-4">
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Interview Summary
+                </h2>
+
+                <p className="mt-0.5 text-[10px] text-slate-400">
+                  Your current configuration
+                </p>
+
+                <div className="mt-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900">
-                      <span className="text-xs font-bold text-white">TECH</span>
-                    </div>
+                    <span className="text-[11px] text-slate-400">Type</span>
 
-                    <span className="rounded-full bg-slate-200 px-3 py-1 text-xs font-medium text-slate-600">
-                      Selected
+                    <span className="text-[11px] font-medium capitalize text-slate-700">
+                      {interviewType}
                     </span>
                   </div>
 
-                  <h3 className="mt-5 text-base font-semibold text-slate-900">
-                    Technical Interview
-                  </h3>
+                  <div className="h-px bg-slate-100" />
 
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    Practice programming, DSA, databases, web development,
-                    system concepts, and role-specific technical questions.
-                  </p>
-                </button>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-400">
+                      Difficulty
+                    </span>
 
-                <button
-                  type="button"
-                  className="rounded-2xl border border-slate-200 bg-white p-6 text-left transition hover:border-slate-400"
-                >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100">
-                    <span className="text-xs font-bold text-slate-700">HR</span>
+                    <span className="text-[11px] font-medium capitalize text-slate-700">
+                      {difficulty}
+                    </span>
                   </div>
 
-                  <h3 className="mt-5 text-base font-semibold text-slate-900">
-                    HR / Behavioral
-                  </h3>
+                  <div className="h-px bg-slate-100" />
 
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    Practice behavioral, situational, communication, and common
-                    HR interview questions.
-                  </p>
-                </button>
-              </div>
-            </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-400">
+                      Questions
+                    </span>
 
-            {/* Role */}
-            <div className="mt-10 border-t border-slate-200 pt-8">
-              <label
-                htmlFor="role"
-                className="text-lg font-semibold text-slate-900"
-              >
-                Target Role
-              </label>
-
-              <p className="mt-1 text-sm text-slate-500">
-                What position are you preparing for?
-              </p>
-
-              <select
-                id="role"
-                className="mt-5 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 outline-none focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-              >
-                <option>Software Engineer</option>
-                <option>Frontend Developer</option>
-                <option>Backend Developer</option>
-                <option>Full Stack Developer</option>
-                <option>Data Analyst</option>
-                <option>Data Scientist</option>
-                <option>Machine Learning Engineer</option>
-              </select>
-            </div>
-
-            {/* Difficulty */}
-            <div className="mt-10 border-t border-slate-200 pt-8">
-              <h2 className="text-lg font-semibold text-slate-900">
-                Difficulty
-              </h2>
-
-              <p className="mt-1 text-sm text-slate-500">
-                Select the level of difficulty.
-              </p>
-
-              <div className="mt-5 grid gap-4 sm:grid-cols-3">
-                <button
-                  type="button"
-                  className="rounded-xl border border-slate-200 p-4 text-left transition hover:border-slate-400"
-                >
-                  <p className="text-sm font-semibold text-slate-900">
-                    Beginner
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">Fundamentals</p>
-                </button>
-
-                <button
-                  type="button"
-                  className="rounded-xl border-2 border-slate-900 bg-slate-50 p-4 text-left"
-                >
-                  <p className="text-sm font-semibold text-slate-900">
-                    Intermediate
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">Interview level</p>
-                </button>
-
-                <button
-                  type="button"
-                  className="rounded-xl border border-slate-200 p-4 text-left transition hover:border-slate-400"
-                >
-                  <p className="text-sm font-semibold text-slate-900">
-                    Advanced
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">Challenging</p>
-                </button>
-              </div>
-            </div>
-
-            {/* Number of Questions */}
-            <div className="mt-10 border-t border-slate-200 pt-8">
-              <label
-                htmlFor="questions"
-                className="text-lg font-semibold text-slate-900"
-              >
-                Number of Questions
-              </label>
-
-              <p className="mt-1 text-sm text-slate-500">
-                Choose how long you want your interview to be.
-              </p>
-
-              <div className="mt-5 grid grid-cols-3 gap-4">
-                <button
-                  type="button"
-                  className="rounded-xl border border-slate-200 p-4 text-center transition hover:border-slate-400"
-                >
-                  <p className="text-lg font-bold text-slate-900">5</p>
-
-                  <p className="mt-1 text-xs text-slate-500">Quick</p>
-                </button>
-
-                <button
-                  type="button"
-                  className="rounded-xl border-2 border-slate-900 bg-slate-50 p-4 text-center"
-                >
-                  <p className="text-lg font-bold text-slate-900">10</p>
-
-                  <p className="mt-1 text-xs text-slate-500">Standard</p>
-                </button>
-
-                <button
-                  type="button"
-                  className="rounded-xl border border-slate-200 p-4 text-center transition hover:border-slate-400"
-                >
-                  <p className="text-lg font-bold text-slate-900">15</p>
-
-                  <p className="mt-1 text-xs text-slate-500">Full</p>
-                </button>
-              </div>
-            </div>
-
-            {/* Resume Status */}
-            <div className="mt-10 rounded-2xl bg-slate-50 p-5">
-              <div className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white">
-                  <span className="text-xs font-bold text-slate-600">PDF</span>
+                    <span className="text-[11px] font-medium text-slate-700">
+                      {questionCount}
+                    </span>
+                  </div>
                 </div>
+              </section>
 
+              <section className="flex flex-1 flex-col justify-between rounded-lg bg-slate-900 p-4 text-white">
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Resume context enabled
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-800">
+                      <span className="text-[9px] font-bold">AI</span>
+                    </div>
 
-                  <p className="mt-1 text-xs leading-5 text-slate-500">
-                    Your uploaded resume will be used later to personalize
-                    interview questions.
+                    <span className="text-xs font-medium">AI Interview</span>
+                  </div>
+
+                  <p className="mt-3 text-[10px] leading-4 text-slate-400">
+                    Your interview will use your selected configuration and
+                    resume information to personalize the experience.
                   </p>
                 </div>
+
+                <div className="mt-5 space-y-2">
+                  <div className="text-[10px] text-slate-400">
+                    ✓ Personalized questions
+                  </div>
+
+                  <div className="text-[10px] text-slate-400">
+                    ✓ Answer evaluation
+                  </div>
+
+                  <div className="text-[10px] text-slate-400">
+                    ✓ Performance feedback
+                  </div>
+                </div>
+              </section>
+
+              <div className="flex gap-2">
+                <Link
+                  to="/resume"
+                  className="flex-1 rounded-md border border-slate-200 bg-white px-3 py-2.5 text-center text-[11px] font-medium text-slate-600 hover:bg-slate-50"
+                >
+                  Back
+                </Link>
+
+                <Link
+                  to="/live-interview"
+                  className="flex-[1.5] rounded-md bg-slate-900 px-3 py-2.5 text-center text-[11px] font-semibold text-white hover:bg-slate-800"
+                >
+                  Start Interview →
+                </Link>
               </div>
-            </div>
-
-            {/* Start */}
-            <div className="mt-8 flex flex-col justify-between gap-4 border-t border-slate-200 pt-8 sm:flex-row sm:items-center">
-              <div>
-                <p className="text-sm font-semibold text-slate-900">
-                  Ready to begin?
-                </p>
-
-                <p className="mt-1 text-xs text-slate-500">
-                  You can change these settings before starting.
-                </p>
-              </div>
-
-              <Link
-                to="/live-interview"
-                className="rounded-xl bg-slate-900 px-7 py-3.5 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-              >
-                Start Interview
-              </Link>
-            </div>
-          </section>
+            </aside>
+          </div>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 

@@ -1,219 +1,231 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
 
 function LiveInterview() {
+  const [isRecording, setIsRecording] = useState(false);
+
   return (
-    <>
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
-      <main className="min-h-screen bg-slate-950 text-white">
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          {/* Interview Header */}
-          <div className="flex flex-col justify-between gap-5 border-b border-slate-800 pb-6 sm:flex-row sm:items-center">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-widest text-slate-500">
-                Live Interview
-              </p>
+      <main className="mx-auto max-w-6xl px-5 py-5">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              Live Interview
+            </p>
 
-              <h1 className="mt-2 text-xl font-semibold">Frontend Developer</h1>
-            </div>
+            <h1 className="mt-1 text-base font-semibold text-slate-900">
+              Technical Interview
+            </h1>
 
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl border border-slate-800 bg-slate-900 px-4 py-2">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500">
-                  Question
-                </p>
-
-                <p className="mt-1 text-sm font-semibold">04 / 10</p>
-              </div>
-
-              <div className="rounded-xl border border-slate-800 bg-slate-900 px-4 py-2">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500">
-                  Time
-                </p>
-
-                <p className="mt-1 text-sm font-semibold">04:32</p>
-              </div>
-            </div>
+            <p className="mt-0.5 text-[10px] text-slate-400">
+              Question 1 of 10 · Medium difficulty
+            </p>
           </div>
 
-          {/* Main Interview Area */}
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {/* Question */}
-            <section className="rounded-3xl border border-slate-800 bg-slate-900 p-7 lg:col-span-2">
-              <div className="flex items-center justify-between">
-                <span className="rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">
-                  Technical Question
-                </span>
-
-                <span className="text-xs text-slate-500">Question 4</span>
-              </div>
-
-              <h2 className="mt-8 max-w-3xl text-2xl font-semibold leading-9 sm:text-3xl">
-                How would you improve the performance of a React application?
-              </h2>
-
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-400">
-                Explain the techniques you would use and why they would help
-                improve the application's performance.
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="text-[9px] uppercase tracking-wide text-slate-400">
+                Time
               </p>
 
-              {/* Answer Area */}
-              <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-950 p-5">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-slate-300">
+              <p className="text-xs font-semibold text-slate-800">08:42</p>
+            </div>
+
+            <button
+              type="button"
+              className="rounded-md border border-slate-200 px-3 py-1.5 text-[10px] font-medium text-slate-600 hover:bg-slate-50"
+            >
+              End Interview
+            </button>
+          </div>
+        </div>
+
+        {/* Main Layout */}
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1.7fr_1fr]">
+          {/* Question */}
+          <section className="rounded-lg border border-slate-200 bg-white p-5">
+            <div className="flex items-center justify-between">
+              <span className="rounded-md bg-slate-100 px-2 py-1 text-[9px] font-medium text-slate-500">
+                Technical
+              </span>
+
+              <span className="text-[10px] text-slate-400">
+                Question 1 / 10
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Interviewer asks
+              </p>
+
+              <h2 className="mt-2 text-base font-semibold leading-6 text-slate-900">
+                Explain the difference between a process and a thread in an
+                operating system.
+              </h2>
+            </div>
+
+            {/* Answer Area */}
+            <div className="mt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold text-slate-800">
                     Your Answer
                   </p>
 
-                  <span className="text-xs text-slate-600">
-                    Voice input enabled
-                  </span>
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    Speak naturally and explain your answer clearly.
+                  </p>
                 </div>
 
-                <textarea
-                  rows="7"
-                  placeholder="Type your answer here..."
-                  className="mt-4 w-full resize-none rounded-xl border border-slate-800 bg-slate-900 px-4 py-4 text-sm leading-6 text-white outline-none placeholder:text-slate-600 focus:border-slate-600"
-                />
-
-                {/* Voice Controls */}
-                <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <button
-                    type="button"
-                    className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-900 px-5 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800"
-                  >
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-800">
-                      ●
-                    </span>
-                    Start Recording
-                  </button>
-
-                  <span className="text-xs text-slate-600">
-                    Your response will be analyzed after submission.
-                  </span>
-                </div>
+                <span className="text-[10px] text-slate-400">
+                  0 / 500 words
+                </span>
               </div>
 
-              {/* Actions */}
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  className="rounded-xl border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800"
-                >
-                  Skip Question
-                </button>
+              <textarea
+                placeholder="Type your answer here..."
+                className="mt-3 h-36 w-full resize-none rounded-md border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
+              />
+            </div>
 
-                <button
-                  type="button"
-                  className="rounded-xl bg-white px-7 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
-                >
-                  Submit Answer
-                </button>
+            {/* Controls */}
+            <div className="mt-4 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setIsRecording(!isRecording)}
+                className={`flex items-center gap-2 rounded-md border px-3 py-2 text-[10px] font-medium transition ${
+                  isRecording
+                    ? "border-red-300 bg-red-50 text-red-600"
+                    : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                }`}
+              >
+                <span
+                  className={`h-2 w-2 rounded-full ${
+                    isRecording ? "bg-red-500" : "bg-slate-300"
+                  }`}
+                />
+
+                {isRecording ? "Recording..." : "Start Recording"}
+              </button>
+
+              <button
+                type="button"
+                className="rounded-md bg-slate-900 px-4 py-2 text-[10px] font-semibold text-white hover:bg-slate-800"
+              >
+                Submit Answer →
+              </button>
+            </div>
+          </section>
+
+          {/* Right Panel */}
+          <aside className="space-y-4">
+            {/* Interview Progress */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xs font-semibold text-slate-900">
+                    Interview Progress
+                  </h2>
+
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    1 of 10 questions completed
+                  </p>
+                </div>
+
+                <span className="text-xs font-semibold text-slate-700">
+                  10%
+                </span>
+              </div>
+
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div className="h-full w-[10%] rounded-full bg-slate-900" />
+              </div>
+
+              <div className="mt-4 grid grid-cols-5 gap-1.5">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                  <div
+                    key={number}
+                    className={`flex h-7 items-center justify-center rounded-md text-[9px] font-medium ${
+                      number === 1
+                        ? "border border-slate-900 bg-slate-900 text-white"
+                        : "border border-slate-200 text-slate-400"
+                    }`}
+                  >
+                    {number}
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* Interview Sidebar */}
-            <aside className="space-y-6">
-              {/* Progress */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold">Interview Progress</p>
+            {/* Interview Tips */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <h2 className="text-xs font-semibold text-slate-900">
+                Interview Tips
+              </h2>
 
-                  <span className="text-xs text-slate-500">40%</span>
+              <div className="mt-3 space-y-3">
+                <div>
+                  <p className="text-[10px] font-medium text-slate-700">
+                    Be structured
+                  </p>
+
+                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
+                    Start with the main concept, then explain details.
+                  </p>
                 </div>
 
-                <div className="mt-5 h-2 overflow-hidden rounded-full bg-slate-800">
-                  <div className="h-full w-[40%] rounded-full bg-white" />
+                <div>
+                  <p className="text-[10px] font-medium text-slate-700">
+                    Give examples
+                  </p>
+
+                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
+                    Use a simple example whenever it helps clarify your answer.
+                  </p>
                 </div>
 
-                <div className="mt-6 grid grid-cols-5 gap-2">
-                  <span className="flex h-8 items-center justify-center rounded-lg bg-white text-xs font-semibold text-slate-950">
-                    1
-                  </span>
+                <div>
+                  <p className="text-[10px] font-medium text-slate-700">
+                    Think before answering
+                  </p>
 
-                  <span className="flex h-8 items-center justify-center rounded-lg bg-white text-xs font-semibold text-slate-950">
-                    2
-                  </span>
-
-                  <span className="flex h-8 items-center justify-center rounded-lg bg-white text-xs font-semibold text-slate-950">
-                    3
-                  </span>
-
-                  <span className="flex h-8 items-center justify-center rounded-lg border border-slate-600 text-xs font-semibold text-slate-400">
-                    4
-                  </span>
-
-                  <span className="flex h-8 items-center justify-center rounded-lg border border-slate-800 text-xs font-semibold text-slate-600">
-                    5
-                  </span>
-                </div>
-              </div>
-
-              {/* Interview Info */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
-                <p className="text-sm font-semibold">Interview Details</p>
-
-                <div className="mt-5 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Type</span>
-
-                    <span className="text-xs font-medium text-slate-300">
-                      Technical
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Difficulty</span>
-
-                    <span className="text-xs font-medium text-slate-300">
-                      Intermediate
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Questions</span>
-
-                    <span className="text-xs font-medium text-slate-300">
-                      10
-                    </span>
-                  </div>
+                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
+                    Take a few seconds to organize your thoughts.
+                  </p>
                 </div>
               </div>
+            </section>
 
-              {/* AI Status */}
-              <div className="rounded-3xl border border-slate-800 bg-slate-900 p-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-800">
-                    <span className="text-xs font-bold">AI</span>
-                  </div>
-
-                  <div>
-                    <p className="text-sm font-semibold">AI Interviewer</p>
-
-                    <p className="mt-1 text-xs text-slate-500">Ready</p>
-                  </div>
+            {/* AI Status */}
+            <section className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <div className="flex items-center gap-2">
+                <div className="flex h-7 w-7 items-center justify-center rounded-md border border-slate-200 bg-white">
+                  <span className="text-[9px] font-semibold text-slate-600">
+                    AI
+                  </span>
                 </div>
 
-                <p className="mt-4 text-xs leading-5 text-slate-500">
-                  Your responses will be evaluated for relevance, completeness,
-                  technical accuracy, and communication.
-                </p>
-              </div>
-            </aside>
-          </div>
+                <div>
+                  <p className="text-[10px] font-semibold text-slate-800">
+                    AI Interviewer
+                  </p>
 
-          {/* Exit */}
-          <div className="mt-8 flex justify-center">
-            <Link
-              to="/dashboard"
-              className="text-xs font-medium text-slate-500 transition hover:text-slate-300"
-            >
-              Exit Interview
-            </Link>
-          </div>
+                  <p className="text-[9px] text-slate-400">
+                    Listening and analyzing
+                  </p>
+                </div>
+
+                <span className="ml-auto h-1.5 w-1.5 rounded-full bg-green-500" />
+              </div>
+            </section>
+          </aside>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

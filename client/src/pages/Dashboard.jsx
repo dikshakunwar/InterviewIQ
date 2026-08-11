@@ -1,315 +1,293 @@
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Dashboard() {
   return (
-    <>
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      <main className="min-h-screen bg-slate-50">
-        <div className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <main>
+        <div className="mx-auto max-w-6xl px-5 py-6">
           {/* Header */}
-          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
+          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <p className="text-sm font-medium text-slate-500">Dashboard</p>
+              <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+                Dashboard
+              </p>
 
-              <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-950">
-                Welcome back!
+              <h1 className="mt-1 text-lg font-semibold text-slate-900">
+                Welcome back, Diksha
               </h1>
 
-              <p className="mt-2 text-sm text-slate-500">
+              <p className="mt-1 text-xs text-slate-500">
                 Continue your interview preparation and track your progress.
               </p>
             </div>
 
             <Link
               to="/interview"
-              className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+              className="w-fit rounded-md bg-slate-900 px-4 py-2 text-[11px] font-semibold text-white transition hover:bg-slate-800"
             >
-              Start Interview
+              Start Interview →
             </Link>
           </div>
 
           {/* Stats */}
-          <section className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <p className="text-sm text-slate-500">Interviews Completed</p>
-
-              <p className="mt-3 text-3xl font-bold text-slate-900">12</p>
-
-              <p className="mt-2 text-xs text-slate-500">+3 this month</p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <p className="text-sm text-slate-500">Average Score</p>
-
-              <p className="mt-3 text-3xl font-bold text-slate-900">78%</p>
-
-              <p className="mt-2 text-xs text-slate-500">+6% from last month</p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <p className="text-sm text-slate-500">Practice Time</p>
-
-              <p className="mt-3 text-3xl font-bold text-slate-900">4.5h</p>
-
-              <p className="mt-2 text-xs text-slate-500">This month</p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <p className="text-sm text-slate-500">Current Streak</p>
-
-              <p className="mt-3 text-3xl font-bold text-slate-900">5 days</p>
-
-              <p className="mt-2 text-xs text-slate-500">Keep going</p>
-            </div>
-          </section>
-
-          {/* Main Grid */}
-          <section className="mt-8 grid gap-6 lg:grid-cols-3">
-            {/* Start Interview */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-7 lg:col-span-2">
-              <div className="flex items-start justify-between gap-5">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                    Quick Start
-                  </p>
-
-                  <h2 className="mt-3 text-2xl font-bold text-slate-950">
-                    Ready for your next interview?
-                  </h2>
-
-                  <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
-                    Choose an interview type and practice questions tailored to
-                    your target role and experience.
-                  </p>
-                </div>
-
-                <div className="hidden h-12 w-12 items-center justify-center rounded-xl bg-slate-100 sm:flex">
-                  <span className="text-lg font-bold text-slate-700">AI</span>
-                </div>
-              </div>
-
-              <div className="mt-7 grid gap-4 sm:grid-cols-2">
-                <Link
-                  to="/interview"
-                  className="rounded-xl border border-slate-200 p-5 transition hover:border-slate-400 hover:shadow-sm"
-                >
-                  <p className="font-semibold text-slate-900">
-                    Technical Interview
-                  </p>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    DSA, programming, databases, systems, and technical
-                    concepts.
-                  </p>
-                </Link>
-
-                <Link
-                  to="/interview"
-                  className="rounded-xl border border-slate-200 p-5 transition hover:border-slate-400 hover:shadow-sm"
-                >
-                  <p className="font-semibold text-slate-900">HR Interview</p>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    Behavioral, communication, strengths, weaknesses, and
-                    situational questions.
-                  </p>
-                </Link>
-              </div>
-            </div>
-
-            {/* Resume */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-7">
-              <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                Resume
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-lg border border-slate-200 bg-white p-4">
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Interviews
               </p>
 
-              <h2 className="mt-3 text-xl font-bold text-slate-950">
-                Your resume
-              </h2>
+              <p className="mt-2 text-xl font-semibold text-slate-900">12</p>
 
-              <div className="mt-6 rounded-xl bg-slate-50 p-5">
-                <p className="text-sm font-medium text-slate-900">
-                  No resume uploaded
+              <p className="mt-1 text-[10px] text-slate-400">+3 this month</p>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-4">
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Average Score
+              </p>
+
+              <p className="mt-2 text-xl font-semibold text-slate-900">78%</p>
+
+              <p className="mt-1 text-[10px] text-slate-400">
+                +6% from last month
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-4">
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Best Score
+              </p>
+
+              <p className="mt-2 text-xl font-semibold text-slate-900">91%</p>
+
+              <p className="mt-1 text-[10px] text-slate-400">Personal best</p>
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-white p-4">
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Practice Time
+              </p>
+
+              <p className="mt-2 text-xl font-semibold text-slate-900">4.8h</p>
+
+              <p className="mt-1 text-[10px] text-slate-400">Total practice</p>
+            </div>
+          </div>
+
+          {/* Main Grid */}
+          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+            {/* Progress */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4 lg:col-span-2">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-sm font-semibold text-slate-900">
+                    Preparation Progress
+                  </h2>
+
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    Your overall interview readiness
+                  </p>
+                </div>
+
+                <span className="text-sm font-semibold text-slate-900">
+                  72%
+                </span>
+              </div>
+
+              <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div className="h-full w-[72%] rounded-full bg-slate-900" />
+              </div>
+
+              <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                <div className="rounded-md bg-slate-50 p-3">
+                  <p className="text-[10px] text-slate-400">Technical</p>
+
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    81%
+                  </p>
+                </div>
+
+                <div className="rounded-md bg-slate-50 p-3">
+                  <p className="text-[10px] text-slate-400">Communication</p>
+
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    72%
+                  </p>
+                </div>
+
+                <div className="rounded-md bg-slate-50 p-3">
+                  <p className="text-[10px] text-slate-400">Problem Solving</p>
+
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    76%
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Resume */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-sm font-semibold text-slate-900">
+                    Resume
+                  </h2>
+
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    Current resume status
+                  </p>
+                </div>
+
+                <span className="rounded-full bg-green-50 px-2 py-1 text-[9px] font-medium text-green-600">
+                  Uploaded
+                </span>
+              </div>
+
+              <div className="mt-4 rounded-md border border-slate-100 bg-slate-50 p-3">
+                <p className="truncate text-xs font-medium text-slate-700">
+                  resume.pdf
                 </p>
 
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Upload your resume to get personalized interview questions.
+                <p className="mt-1 text-[10px] text-slate-400">
+                  Last updated recently
                 </p>
               </div>
 
               <Link
                 to="/resume"
-                className="mt-5 block w-full rounded-xl border border-slate-300 px-4 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                className="mt-3 block rounded-md border border-slate-200 px-3 py-2 text-center text-[10px] font-medium text-slate-600 transition hover:bg-slate-50"
               >
-                Upload Resume
+                Manage Resume
               </Link>
-            </div>
-          </section>
+            </section>
+          </div>
 
-          {/* Recent Interviews */}
-          <section className="mt-8 rounded-2xl border border-slate-200 bg-white">
-            <div className="flex items-center justify-between border-b border-slate-200 px-6 py-5">
-              <div>
-                <h2 className="font-semibold text-slate-900">
-                  Recent Interviews
-                </h2>
-
-                <p className="mt-1 text-xs text-slate-500">
-                  Your latest practice sessions
-                </p>
-              </div>
-
-              <Link
-                to="/history"
-                className="text-sm font-medium text-slate-600 hover:text-slate-900"
-              >
-                View all
-              </Link>
-            </div>
-
-            <div className="divide-y divide-slate-200">
-              <div className="flex flex-col justify-between gap-4 px-6 py-5 sm:flex-row sm:items-center">
+          {/* Bottom Grid */}
+          <div className="mt-4 grid gap-4 lg:grid-cols-3">
+            {/* Recent Interviews */}
+            <section className="rounded-lg border border-slate-200 bg-white lg:col-span-2">
+              <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Frontend Developer
-                  </p>
+                  <h2 className="text-sm font-semibold text-slate-900">
+                    Recent Interviews
+                  </h2>
 
-                  <p className="mt-1 text-xs text-slate-500">
-                    Technical Interview · 2 days ago
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    Your latest practice sessions
                   </p>
                 </div>
 
-                <div className="flex items-center gap-5">
-                  <span className="text-sm font-semibold text-slate-900">
+                <Link
+                  to="/history"
+                  className="text-[10px] font-medium text-slate-500 hover:text-slate-900"
+                >
+                  View all →
+                </Link>
+              </div>
+
+              <div className="divide-y divide-slate-100">
+                <div className="flex items-center justify-between px-4 py-3">
+                  <div>
+                    <p className="text-xs font-medium text-slate-800">
+                      Frontend Developer
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] text-slate-400">
+                      Technical · 10 questions · 2 days ago
+                    </p>
+                  </div>
+
+                  <span className="text-sm font-semibold text-slate-800">
                     84%
                   </span>
-
-                  <Link
-                    to="/results"
-                    className="text-xs font-medium text-slate-600 hover:text-slate-900"
-                  >
-                    View Results
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-between gap-4 px-6 py-5 sm:flex-row sm:items-center">
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Software Engineer
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    HR Interview · 5 days ago
-                  </p>
                 </div>
 
-                <div className="flex items-center gap-5">
-                  <span className="text-sm font-semibold text-slate-900">
+                <div className="flex items-center justify-between px-4 py-3">
+                  <div>
+                    <p className="text-xs font-medium text-slate-800">
+                      Software Engineer
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] text-slate-400">
+                      Behavioral · 10 questions · 5 days ago
+                    </p>
+                  </div>
+
+                  <span className="text-sm font-semibold text-slate-800">
                     76%
                   </span>
-
-                  <Link
-                    to="/results"
-                    className="text-xs font-medium text-slate-600 hover:text-slate-900"
-                  >
-                    View Results
-                  </Link>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-between gap-4 px-6 py-5 sm:flex-row sm:items-center">
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Full Stack Developer
-                  </p>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    Technical Interview · 1 week ago
-                  </p>
                 </div>
 
-                <div className="flex items-center gap-5">
-                  <span className="text-sm font-semibold text-slate-900">
+                <div className="flex items-center justify-between px-4 py-3">
+                  <div>
+                    <p className="text-xs font-medium text-slate-800">
+                      Full Stack Developer
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] text-slate-400">
+                      Technical · 15 questions · 1 week ago
+                    </p>
+                  </div>
+
+                  <span className="text-sm font-semibold text-slate-800">
                     72%
                   </span>
-
-                  <Link
-                    to="/results"
-                    className="text-xs font-medium text-slate-600 hover:text-slate-900"
-                  >
-                    View Results
-                  </Link>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          {/* Progress */}
-          <section className="mt-8 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-2xl border border-slate-200 bg-white p-7">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">
-                    Interview Progress
-                  </p>
+            {/* Quick Actions */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <h2 className="text-sm font-semibold text-slate-900">
+                Quick Actions
+              </h2>
 
-                  <p className="mt-1 text-xs text-slate-500">
-                    Overall preparation score
-                  </p>
-                </div>
-
-                <span className="text-2xl font-bold text-slate-900">78%</span>
-              </div>
-
-              <div className="mt-6 h-2 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[78%] rounded-full bg-slate-900" />
-              </div>
-
-              <p className="mt-4 text-xs leading-5 text-slate-500">
-                You're making good progress. Focus on improving your
-                communication and technical explanation skills.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-7">
-              <p className="text-sm font-semibold text-slate-900">
-                Recommended Practice
+              <p className="mt-0.5 text-[10px] text-slate-400">
+                Continue your preparation
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
-                Based on your recent performance
-              </p>
-
-              <div className="mt-6 space-y-3">
-                <div className="flex items-center justify-between rounded-xl bg-slate-50 p-4">
-                  <span className="text-sm text-slate-700">
-                    Data Structures
+              <div className="mt-4 space-y-2">
+                <Link
+                  to="/interview"
+                  className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2.5 transition hover:bg-slate-50"
+                >
+                  <span className="text-xs font-medium text-slate-700">
+                    Start Interview
                   </span>
 
-                  <span className="text-xs font-semibold text-slate-500">
-                    Practice
-                  </span>
-                </div>
+                  <span className="text-xs text-slate-400">→</span>
+                </Link>
 
-                <div className="flex items-center justify-between rounded-xl bg-slate-50 p-4">
-                  <span className="text-sm text-slate-700">Communication</span>
-
-                  <span className="text-xs font-semibold text-slate-500">
-                    Improve
+                <Link
+                  to="/resume"
+                  className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2.5 transition hover:bg-slate-50"
+                >
+                  <span className="text-xs font-medium text-slate-700">
+                    Update Resume
                   </span>
-                </div>
+
+                  <span className="text-xs text-slate-400">→</span>
+                </Link>
+
+                <Link
+                  to="/history"
+                  className="flex items-center justify-between rounded-md border border-slate-200 px-3 py-2.5 transition hover:bg-slate-50"
+                >
+                  <span className="text-xs font-medium text-slate-700">
+                    View History
+                  </span>
+
+                  <span className="text-xs text-slate-400">→</span>
+                </Link>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 

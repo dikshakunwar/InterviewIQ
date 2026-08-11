@@ -1,167 +1,279 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Resume() {
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState("");
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+
+    if (!selectedFile) return;
+
+    setError("");
+
+    const allowedTypes = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+
+    if (!allowedTypes.includes(selectedFile.type)) {
+      setError("Only PDF and DOCX files are allowed.");
+      setFile(null);
+      return;
+    }
+
+    if (selectedFile.size > 5 * 1024 * 1024) {
+      setError("File size must be less than 5 MB.");
+      setFile(null);
+      return;
+    }
+
+    setFile(selectedFile);
+  };
+
+  const removeFile = () => {
+    setFile(null);
+    setError("");
+  };
+
   return (
-    <>
+    <div className="h-screen overflow-hidden bg-slate-50">
       <Navbar />
 
-      <main className="min-h-screen bg-slate-50">
-        <div className="mx-auto max-w-5xl px-6 py-12 lg:px-8">
+      <main className="h-[calc(100vh-5rem)] overflow-hidden">
+        <div className="mx-auto flex h-full max-w-6xl flex-col px-5 py-4">
           {/* Header */}
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium text-slate-500">Resume</p>
-
-            <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-              Build your interview profile
-            </h1>
-
-            <p className="mt-3 text-sm leading-6 text-slate-600">
-              Upload your resume so HireReady can use your skills, projects,
-              education, and experience to personalize your interview.
-            </p>
-          </div>
-
-          {/* Upload Card */}
-          <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            <div className="border-2 border-dashed border-slate-300 rounded-2xl p-10 text-center transition hover:border-slate-400">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
-                <span className="text-xl font-bold text-slate-700">↑</span>
-              </div>
-
-              <h2 className="mt-6 text-lg font-semibold text-slate-900">
-                Upload your resume
-              </h2>
-
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
-                Upload your latest resume in PDF or DOCX format.
-              </p>
-
-              <label className="mt-6 inline-flex cursor-pointer rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
-                Choose File
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  className="hidden"
-                />
-              </label>
-
-              <p className="mt-4 text-xs text-slate-400">
-                Maximum file size: 5 MB
-              </p>
-            </div>
-
-            {/* File Status */}
-            <div className="mt-8">
-              <h3 className="text-sm font-semibold text-slate-900">
-                Uploaded Resume
-              </h3>
-
-              <div className="mt-4 rounded-2xl border border-slate-200 p-5">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100">
-                      <span className="text-xs font-bold text-slate-600">
-                        PDF
-                      </span>
-                    </div>
-
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">
-                        No resume uploaded yet
-                      </p>
-
-                      <p className="mt-1 text-xs text-slate-500">
-                        Your uploaded file will appear here.
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="rounded-lg border border-slate-200 px-4 py-2 text-xs font-medium text-slate-400"
-                    disabled
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Resume Benefits */}
-          <section className="mt-8 grid gap-5 md:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
-                <span className="text-sm font-bold text-slate-700">01</span>
-              </div>
-
-              <h3 className="mt-5 text-sm font-semibold text-slate-900">
-                Extract Your Skills
-              </h3>
-
-              <p className="mt-2 text-xs leading-5 text-slate-500">
-                Your technical and professional skills can be identified from
-                your resume.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
-                <span className="text-sm font-bold text-slate-700">02</span>
-              </div>
-
-              <h3 className="mt-5 text-sm font-semibold text-slate-900">
-                Understand Your Projects
-              </h3>
-
-              <p className="mt-2 text-xs leading-5 text-slate-500">
-                Your projects and experience can become part of your interview
-                context.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 bg-white p-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
-                <span className="text-sm font-bold text-slate-700">03</span>
-              </div>
-
-              <h3 className="mt-5 text-sm font-semibold text-slate-900">
-                Personalize Questions
-              </h3>
-
-              <p className="mt-2 text-xs leading-5 text-slate-500">
-                Your resume information will later be used to generate relevant
-                interview questions.
-              </p>
-            </div>
-          </section>
-
-          {/* Continue */}
-          <div className="mt-8 flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center">
+          <div className="flex shrink-0 items-center justify-between">
             <div>
-              <p className="text-sm font-semibold text-slate-900">
-                Ready to continue?
+              <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+                Resume
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
-                You can choose your interview type next.
+              <h1 className="mt-0.5 text-base font-semibold text-slate-900">
+                Resume Setup
+              </h1>
+
+              <p className="mt-0.5 text-[11px] text-slate-500">
+                Upload your resume to personalize your AI interview.
               </p>
             </div>
 
             <Link
-              to="/interview"
-              className="rounded-xl bg-slate-900 px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+              to="/dashboard"
+              className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-600 hover:bg-slate-50"
             >
-              Continue to Interview
+              Dashboard
             </Link>
+          </div>
+
+          {/* Main */}
+          <div className="mt-4 grid min-h-0 flex-1 grid-cols-[minmax(0,2fr)_minmax(240px,1fr)] gap-3">
+            {/* Upload Card */}
+            <section className="flex min-h-0 flex-col rounded-lg border border-slate-200 bg-white p-4">
+              <div className="shrink-0">
+                <h2 className="text-xs font-semibold text-slate-900">
+                  Upload Resume
+                </h2>
+
+                <p className="mt-0.5 text-[10px] text-slate-400">
+                  PDF or DOCX · Maximum 5 MB
+                </p>
+              </div>
+
+              {/* Upload Area */}
+              <div className="mt-3 min-h-0 flex-1">
+                {!file ? (
+                  <label
+                    htmlFor="resume-upload"
+                    className="flex h-full min-h-0 cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-slate-300 bg-slate-50 transition hover:border-slate-400 hover:bg-slate-100"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-white shadow-sm">
+                      <span className="text-xs text-slate-500">↑</span>
+                    </div>
+
+                    <p className="mt-2 text-xs font-medium text-slate-700">
+                      Drop your resume here
+                    </p>
+
+                    <p className="mt-1 text-[10px] text-slate-400">
+                      or click to browse
+                    </p>
+
+                    <input
+                      id="resume-upload"
+                      type="file"
+                      accept=".pdf,.docx"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                  </label>
+                ) : (
+                  <div className="flex h-full items-center justify-center rounded-md border border-slate-200 bg-slate-50">
+                    <div className="w-full max-w-sm rounded-md border border-slate-200 bg-white p-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex min-w-0 items-center gap-2">
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-slate-100">
+                            <span className="text-[9px] font-bold text-slate-500">
+                              {file.name.toLowerCase().endsWith(".pdf")
+                                ? "PDF"
+                                : "DOC"}
+                            </span>
+                          </div>
+
+                          <div className="min-w-0">
+                            <p className="truncate text-xs font-medium text-slate-800">
+                              {file.name}
+                            </p>
+
+                            <p className="text-[10px] text-slate-400">
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={removeFile}
+                          className="ml-3 text-[10px] text-slate-400 hover:text-red-500"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="mt-2 text-[10px] text-green-600">
+                        ✓ Resume ready for analysis
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Error */}
+              {error && (
+                <div className="mt-2 shrink-0 rounded-md bg-red-50 px-2.5 py-2 text-[10px] text-red-600">
+                  {error}
+                </div>
+              )}
+
+              {/* Bottom */}
+              <div className="mt-3 flex shrink-0 items-center justify-between border-t border-slate-100 pt-3">
+                <p className="text-[9px] text-slate-400">
+                  Used for interview personalization only.
+                </p>
+
+                <Link
+                  to={file ? "/interview" : "#"}
+                  onClick={(e) => {
+                    if (!file) {
+                      e.preventDefault();
+                      setError("Please upload your resume first.");
+                    }
+                  }}
+                  className={`rounded-md px-3 py-1.5 text-[10px] font-semibold ${
+                    file
+                      ? "bg-slate-900 text-white hover:bg-slate-800"
+                      : "cursor-not-allowed bg-slate-200 text-slate-400"
+                  }`}
+                >
+                  Continue →
+                </Link>
+              </div>
+            </section>
+
+            {/* Right Column */}
+            <aside className="flex min-h-0 flex-col gap-3">
+              {/* Analysis */}
+              <div className="shrink-0 rounded-lg border border-slate-200 bg-white p-4">
+                <h2 className="text-xs font-semibold text-slate-900">
+                  What we'll analyze
+                </h2>
+
+                <div className="mt-3 space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-600">Skills</span>
+
+                    <span className="text-[9px] text-slate-400">
+                      Technical stack
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-slate-100" />
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-600">
+                      Experience
+                    </span>
+
+                    <span className="text-[9px] text-slate-400">
+                      Work history
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-slate-100" />
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-600">Projects</span>
+
+                    <span className="text-[9px] text-slate-400">
+                      Project details
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-slate-100" />
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-slate-600">
+                      Education
+                    </span>
+
+                    <span className="text-[9px] text-slate-400">
+                      Academic profile
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Card */}
+              <div className="min-h-0 flex-1 rounded-lg bg-slate-900 p-4 text-white">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-800">
+                    <span className="text-[9px] font-bold">AI</span>
+                  </div>
+
+                  <span className="text-xs font-medium">
+                    AI Personalization
+                  </span>
+                </div>
+
+                <p className="mt-3 text-[10px] leading-4 text-slate-400">
+                  Your resume information will be used to generate relevant
+                  interview questions and personalized feedback.
+                </p>
+
+                <div className="mt-4 space-y-2">
+                  <div className="text-[10px] text-slate-400">
+                    <span className="mr-1 text-slate-300">✓</span>
+                    Resume-based questions
+                  </div>
+
+                  <div className="text-[10px] text-slate-400">
+                    <span className="mr-1 text-slate-300">✓</span>
+                    Skill-specific evaluation
+                  </div>
+
+                  <div className="text-[10px] text-slate-400">
+                    <span className="mr-1 text-slate-300">✓</span>
+                    Personalized feedback
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 
