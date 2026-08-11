@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,34 +12,23 @@ function Register() {
     confirmPassword: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
 
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setError("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setError("");
-
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.password ||
-      !formData.confirmPassword
-    ) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    if (!formData.email.includes("@")) {
-      setError("Please enter a valid email address.");
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
@@ -47,40 +37,41 @@ function Register() {
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    console.log("Registration data:", formData);
-
-    alert("Registration form submitted successfully.");
+    // Backend registration will be connected later.
+    navigate("/dashboard");
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
-      <main className="min-h-[calc(100vh-80px)] bg-slate-50">
-        <div className="mx-auto flex max-w-md flex-col justify-center px-6 py-16">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold tracking-tight text-slate-950">
-                Create your account
-              </h1>
+      <main className="flex min-h-[calc(100vh-64px)] items-center justify-center px-5 py-8">
+        <div className="w-full max-w-sm">
+          {/* Header */}
+          <div className="text-center">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              Get started
+            </p>
 
-              <p className="mt-3 text-sm text-slate-500">
-                Start preparing for your next interview.
-              </p>
-            </div>
+            <h1 className="mt-1.5 text-xl font-semibold tracking-tight text-slate-900">
+              Create your account
+            </h1>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <p className="mt-1.5 text-xs text-slate-400">
+              Start preparing for your next interview.
+            </p>
+          </div>
+
+          {/* Register Card */}
+          <div className="mt-6 rounded-lg border border-slate-200 bg-white p-5">
+            <form onSubmit={handleSubmit} className="space-y-3.5">
+              {/* Name */}
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="text-[10px] font-medium text-slate-600"
                 >
-                  Full Name
+                  Full name
                 </label>
 
                 <input
@@ -89,17 +80,19 @@ function Register() {
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Your full name"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                  placeholder="Your name"
+                  required
+                  className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
                 />
               </div>
 
+              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="text-[10px] font-medium text-slate-600"
                 >
-                  Email
+                  Email address
                 </label>
 
                 <input
@@ -109,88 +102,125 @@ function Register() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                  required
+                  className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
                 />
               </div>
 
+              {/* Password */}
               <div>
                 <label
                   htmlFor="password"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="text-[10px] font-medium text-slate-600"
                 >
                   Password
                 </label>
 
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Create a password"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-                />
+                <div className="relative mt-1.5">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a password"
+                    required
+                    className="h-9 w-full rounded-md border border-slate-200 bg-white px-3 pr-14 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] font-medium text-slate-400 hover:text-slate-700"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
+
+                <p className="mt-1 text-[9px] text-slate-300">
+                  Use at least 6 characters.
+                </p>
               </div>
 
+              {/* Confirm Password */}
               <div>
                 <label
                   htmlFor="confirmPassword"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="text-[10px] font-medium text-slate-600"
                 >
-                  Confirm Password
+                  Confirm password
                 </label>
 
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="Confirm your password"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                  required
+                  className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
                 />
               </div>
 
-              <label className="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  className="mt-1 h-4 w-4 rounded border-slate-300"
-                />
-
-                <span className="text-xs leading-5 text-slate-500">
-                  I agree to the Terms of Service and Privacy Policy.
-                </span>
-              </label>
-
+              {/* Error */}
               {error && (
-                <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-md bg-red-50 px-3 py-2 text-[10px] text-red-600">
                   {error}
                 </div>
               )}
 
+              {/* Terms */}
+              <label className="flex cursor-pointer items-start gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  required
+                  className="mt-0.5 h-3 w-3 shrink-0 rounded border-slate-300"
+                />
+
+                <span className="text-[9px] leading-4 text-slate-400">
+                  I agree to the terms of service and privacy policy.
+                </span>
+              </label>
+
+              {/* Submit */}
               <button
                 type="submit"
-                className="w-full rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="w-full rounded-md bg-slate-900 py-2.5 text-[11px] font-semibold text-white transition hover:bg-slate-800"
               >
                 Create Account
               </button>
             </form>
 
-            <p className="mt-7 text-center text-sm text-slate-500">
+            {/* Divider */}
+            <div className="my-5 flex items-center gap-3">
+              <div className="h-px flex-1 bg-slate-100" />
+
+              <span className="text-[9px] text-slate-300">OR</span>
+
+              <div className="h-px flex-1 bg-slate-100" />
+            </div>
+
+            {/* Login */}
+            <p className="text-center text-[10px] text-slate-400">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="font-semibold text-slate-900 hover:underline"
+                className="font-medium text-slate-700 hover:text-slate-900"
               >
                 Sign in
               </Link>
             </p>
           </div>
+
+          {/* Footer */}
+          <p className="mt-5 text-center text-[9px] text-slate-300">
+            Your information is used only to personalize your interview
+            experience.
+          </p>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 

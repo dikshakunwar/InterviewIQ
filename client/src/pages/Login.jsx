@@ -1,69 +1,62 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setError("");
-
-    if (!formData.email || !formData.password) {
-      setError("Please enter both email and password.");
-      return;
-    }
-
-    if (!formData.email.includes("@")) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    console.log("Login data:", formData);
-
-    alert("Login form submitted successfully.");
+    // Backend authentication will be connected later.
+    navigate("/dashboard");
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
-      <main className="min-h-[calc(100vh-80px)] bg-slate-50">
-        <div className="mx-auto flex max-w-md flex-col justify-center px-6 py-20">
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold tracking-tight text-slate-950">
-                Welcome back
-              </h1>
+      <main className="flex min-h-[calc(100vh-64px)] items-center justify-center px-5 py-8">
+        <div className="w-full max-w-sm">
+          {/* Header */}
+          <div className="text-center">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              Welcome back
+            </p>
 
-              <p className="mt-3 text-sm text-slate-500">
-                Sign in to continue your interview preparation.
-              </p>
-            </div>
+            <h1 className="mt-1.5 text-xl font-semibold tracking-tight text-slate-900">
+              Sign in to HireReady AI
+            </h1>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <p className="mt-1.5 text-xs text-slate-400">
+              Continue your interview preparation.
+            </p>
+          </div>
+
+          {/* Login Card */}
+          <div className="mt-6 rounded-lg border border-slate-200 bg-white p-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-slate-700"
+                  className="text-[10px] font-medium text-slate-600"
                 >
-                  Email
+                  Email address
                 </label>
 
                 <input
@@ -73,71 +66,98 @@ function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                  required
+                  className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
                 />
               </div>
 
+              {/* Password */}
               <div>
-                <label
-                  htmlFor="password"
-                  className="mb-2 block text-sm font-medium text-slate-700"
-                >
-                  Password
-                </label>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-[10px] font-medium text-slate-600"
+                  >
+                    Password
+                  </label>
 
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-                />
+                  <button
+                    type="button"
+                    className="text-[9px] font-medium text-slate-400 hover:text-slate-700"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+
+                <div className="relative mt-1.5">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    required
+                    className="h-9 w-full rounded-md border border-slate-200 bg-white px-3 pr-16 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-900"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] font-medium text-slate-400 hover:text-slate-700"
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+                </div>
               </div>
 
-              {error && (
-                <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
-                  {error}
-                </div>
-              )}
+              {/* Remember */}
+              <label className="flex cursor-pointer items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="h-3 w-3 rounded border-slate-300"
+                />
 
+                <span className="text-[10px] text-slate-500">Remember me</span>
+              </label>
+
+              {/* Submit */}
               <button
                 type="submit"
-                className="w-full rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="w-full rounded-md bg-slate-900 py-2.5 text-[11px] font-semibold text-white transition hover:bg-slate-800"
               >
                 Sign In
               </button>
             </form>
 
-            <div className="my-7 flex items-center gap-4">
-              <div className="h-px flex-1 bg-slate-200" />
-              <span className="text-xs text-slate-400">OR</span>
-              <div className="h-px flex-1 bg-slate-200" />
+            {/* Divider */}
+            <div className="my-5 flex items-center gap-3">
+              <div className="h-px flex-1 bg-slate-100" />
+
+              <span className="text-[9px] text-slate-300">OR</span>
+
+              <div className="h-px flex-1 bg-slate-100" />
             </div>
 
-            <button
-              type="button"
-              className="w-full rounded-xl border border-slate-300 bg-white px-5 py-3.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-              Continue with Google
-            </button>
-
-            <p className="mt-7 text-center text-sm text-slate-500">
+            {/* Register */}
+            <p className="text-center text-[10px] text-slate-400">
               Don't have an account?{" "}
               <Link
                 to="/register"
-                className="font-semibold text-slate-900 hover:underline"
+                className="font-medium text-slate-700 hover:text-slate-900"
               >
                 Create one
               </Link>
             </p>
           </div>
+
+          {/* Footer */}
+          <p className="mt-5 text-center text-[9px] text-slate-300">
+            By continuing, you agree to HireReady AI's terms and privacy policy.
+          </p>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 

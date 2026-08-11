@@ -1,279 +1,232 @@
+import { useState } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Contact form submitted:", formData);
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
 
-      <main className="bg-white">
-        {/* Hero */}
-        <section className="border-b border-slate-200">
-          <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Contact
-              </p>
+      <main className="mx-auto max-w-5xl px-5 py-10">
+        {/* Header */}
+        <div className="max-w-xl">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+            Contact
+          </p>
 
-              <h1 className="mt-5 text-5xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl">
-                Have a question?
-                <br />
-                <span className="text-slate-500">We're here to help.</span>
-              </h1>
+          <h1 className="mt-1.5 text-xl font-semibold tracking-tight text-slate-900">
+            How can we help?
+          </h1>
 
-              <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">
-                Whether you have a question about HireReady, need help with your
-                account, or want to share feedback, send us a message.
-              </p>
-            </div>
-          </div>
-        </section>
+          <p className="mt-2 text-xs leading-5 text-slate-500">
+            Have a question, feedback, or something you'd like to discuss? Send
+            us a message and we'll get back to you.
+          </p>
+        </div>
 
-        {/* Contact Section */}
-        <section>
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-2 lg:px-8">
-            {/* Contact Information */}
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Get in touch
-              </p>
+        {/* Content */}
+        <div className="mt-7 grid gap-5 lg:grid-cols-[1.5fr_1fr]">
+          {/* Form */}
+          <section className="rounded-lg border border-slate-200 bg-white p-5">
+            <h2 className="text-sm font-semibold text-slate-900">
+              Send us a message
+            </h2>
 
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
-                Let's talk about your interview preparation.
-              </h2>
+            <p className="mt-1 text-[10px] text-slate-400">
+              Fill in the details below.
+            </p>
 
-              <p className="mt-5 max-w-xl text-base leading-7 text-slate-600">
-                Send us your question or feedback and we'll get back to you as
-                soon as possible.
-              </p>
-
-              <div className="mt-10 space-y-6">
-                {/* Email */}
-                <div className="flex gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                    <span className="text-sm font-bold text-slate-700">@</span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      Email
-                    </h3>
-
-                    <p className="mt-1 text-sm text-slate-600">
-                      support@hireready.ai
-                    </p>
-                  </div>
-                </div>
-
-                {/* Support */}
-                <div className="flex gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                    <span className="text-sm font-bold text-slate-700">?</span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      Support
-                    </h3>
-
-                    <p className="mt-1 text-sm text-slate-600">
-                      Get help with your account and interviews.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Feedback */}
-                <div className="flex gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100">
-                    <span className="text-sm font-bold text-slate-700">+</span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-sm font-semibold text-slate-900">
-                      Feedback
-                    </h3>
-
-                    <p className="mt-1 text-sm text-slate-600">
-                      Help us make HireReady better.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
-              <h2 className="text-xl font-semibold text-slate-900">
-                Send us a message
-              </h2>
-
-              <p className="mt-2 text-sm text-slate-500">
-                Fill in the details below.
-              </p>
-
-              <form className="mt-8 space-y-5">
-                {/* Name */}
+            <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+              {/* Name + Email */}
+              <div className="grid gap-3 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-2 block text-sm font-medium text-slate-700"
+                    className="text-[10px] font-medium text-slate-600"
                   >
                     Name
                   </label>
 
                   <input
                     id="name"
+                    name="name"
                     type="text"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="Your name"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                    required
+                    className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
                   />
                 </div>
 
-                {/* Email */}
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-slate-700"
+                    className="text-[10px] font-medium text-slate-600"
                   >
                     Email
                   </label>
 
                   <input
                     id="email"
+                    name="email"
                     type="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="you@example.com"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                    required
+                    className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
                   />
                 </div>
+              </div>
 
-                {/* Subject */}
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="mb-2 block text-sm font-medium text-slate-700"
-                  >
-                    Subject
-                  </label>
+              {/* Subject */}
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="text-[10px] font-medium text-slate-600"
+                >
+                  Subject
+                </label>
 
-                  <input
-                    id="subject"
-                    type="text"
-                    placeholder="How can we help?"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-                  />
-                </div>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="How can we help?"
+                  required
+                  className="mt-1.5 h-9 w-full rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
+                />
+              </div>
 
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="mb-2 block text-sm font-medium text-slate-700"
-                  >
-                    Message
-                  </label>
+              {/* Message */}
+              <div>
+                <label
+                  htmlFor="message"
+                  className="text-[10px] font-medium text-slate-600"
+                >
+                  Message
+                </label>
 
-                  <textarea
-                    id="message"
-                    rows="5"
-                    placeholder="Write your message..."
-                    className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
-                  />
-                </div>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Write your message..."
+                  required
+                  rows={5}
+                  className="mt-1.5 w-full resize-none rounded-md border border-slate-200 bg-white px-3 py-2.5 text-xs leading-5 text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
+                />
+              </div>
 
+              {/* Submit */}
+              <div className="flex justify-end pt-1">
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-slate-900 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                  className="rounded-md bg-slate-900 px-4 py-2 text-[11px] font-semibold text-white transition hover:bg-slate-800"
                 >
-                  Send Message
+                  Send Message →
                 </button>
-              </form>
-            </div>
-          </div>
-        </section>
+              </div>
+            </form>
+          </section>
 
-        {/* FAQ */}
-        <section className="border-y border-slate-200 bg-slate-50">
-          <div className="mx-auto max-w-4xl px-6 py-24 lg:px-8">
-            <div className="text-center">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                FAQ
-              </p>
-
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-slate-950">
-                Frequently asked questions
+          {/* Contact Information */}
+          <aside className="space-y-3">
+            <section className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+              <h2 className="text-sm font-semibold text-slate-900">
+                Get in touch
               </h2>
-            </div>
 
-            <div className="mt-12 space-y-4">
-              <details className="group rounded-2xl border border-slate-200 bg-white p-6">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">
-                  What is HireReady?
-                </summary>
+              <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                We're always happy to hear your feedback and suggestions.
+              </p>
+            </section>
 
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  HireReady is an AI-powered interview preparation platform that
-                  helps candidates practice interviews and understand their
-                  performance.
-                </p>
-              </details>
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                    Email
+                  </p>
 
-              <details className="group rounded-2xl border border-slate-200 bg-white p-6">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">
-                  Can I practice using my own resume?
-                </summary>
+                  <p className="mt-1 text-xs font-medium text-slate-700">
+                    support@hireready.ai
+                  </p>
+                </div>
 
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  Yes. You will be able to upload your resume and use it as
-                  context for personalized interview preparation.
-                </p>
-              </details>
+                <div className="h-px bg-slate-100" />
 
-              <details className="group rounded-2xl border border-slate-200 bg-white p-6">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">
-                  Will the interview questions be personalized?
-                </summary>
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                    Support
+                  </p>
 
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  The goal is to generate questions based on your selected role,
-                  resume, skills, projects, and interview type.
-                </p>
-              </details>
+                  <p className="mt-1 text-xs text-slate-600">Monday – Friday</p>
 
-              <details className="group rounded-2xl border border-slate-200 bg-white p-6">
-                <summary className="cursor-pointer list-none font-semibold text-slate-900">
-                  Can I see my previous performance?
-                </summary>
+                  <p className="mt-0.5 text-[10px] text-slate-400">
+                    We usually respond within 24–48 hours.
+                  </p>
+                </div>
+              </div>
+            </section>
 
-                <p className="mt-4 text-sm leading-7 text-slate-600">
-                  Yes. Your dashboard will eventually contain interview history,
-                  scores, feedback, and performance trends.
-                </p>
-              </details>
-            </div>
-          </div>
-        </section>
+            {/* FAQ */}
+            <section className="rounded-lg border border-slate-200 bg-white p-4">
+              <h2 className="text-sm font-semibold text-slate-900">
+                Common questions
+              </h2>
 
-        {/* CTA */}
-        <section className="bg-slate-900">
-          <div className="mx-auto max-w-7xl px-6 py-20 text-center lg:px-8">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Start preparing today.
-            </h2>
+              <div className="mt-3 space-y-3">
+                <div>
+                  <p className="text-[10px] font-medium text-slate-700">
+                    Need help with your resume?
+                  </p>
 
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300">
-              Build confidence through realistic practice and meaningful
-              feedback.
-            </p>
+                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
+                    Upload your resume from the Resume page and continue to
+                    interview setup.
+                  </p>
+                </div>
 
-            <button className="mt-8 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-slate-900 transition hover:bg-slate-100">
-              Get Started
-            </button>
-          </div>
-        </section>
+                <div>
+                  <p className="text-[10px] font-medium text-slate-700">
+                    Having an interview issue?
+                  </p>
+
+                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
+                    Make sure your microphone permissions are enabled before
+                    starting a live interview.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 
