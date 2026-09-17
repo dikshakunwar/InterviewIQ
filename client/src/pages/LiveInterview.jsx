@@ -1,8 +1,42 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function LiveInterview() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const interviewData = location.state || {
+    interviewType: "technical",
+    difficulty: "medium",
+    questionCount: "10",
+  };
+
   const [isRecording, setIsRecording] = useState(false);
+  const [answer, setAnswer] = useState("");
+
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+
+  const totalQuestions = Number(interviewData.questionCount);
+
+  const formatText = (value) => {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  };
+
+  const handleSubmit = () => {
+    if (!answer.trim()) {
+      return;
+    }
+
+    if (currentQuestion < totalQuestions) {
+      setCurrentQuestion((prev) => prev + 1);
+      setAnswer("");
+    } else {
+      navigate("/results");
+    }
+  };
+
+  const progress = Math.round(((currentQuestion - 1) / totalQuestions) * 100);
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -17,11 +51,12 @@ function LiveInterview() {
             </p>
 
             <h1 className="mt-1 text-base font-semibold text-slate-900">
-              Technical Interview
+              {formatText(interviewData.interviewType)} Interview
             </h1>
 
             <p className="mt-0.5 text-[10px] text-slate-400">
-              Question 1 of 10 · Medium difficulty
+              Question {currentQuestion} of {totalQuestions} ·{" "}
+              {formatText(interviewData.difficulty)} difficulty
             </p>
           </div>
 
@@ -36,6 +71,7 @@ function LiveInterview() {
 
             <button
               type="button"
+              onClick={() => navigate("/dashboard")}
               className="rounded-md border border-slate-200 px-3 py-1.5 text-[10px] font-medium text-slate-600 hover:bg-slate-50"
             >
               End Interview
@@ -43,17 +79,17 @@ function LiveInterview() {
           </div>
         </div>
 
-        {/* Main Layout */}
+        {/* Main */}
         <div className="mt-5 grid gap-4 lg:grid-cols-[1.7fr_1fr]">
-          {/* Question */}
+          {/* Question Area */}
           <section className="rounded-lg border border-slate-200 bg-white p-5">
             <div className="flex items-center justify-between">
               <span className="rounded-md bg-slate-100 px-2 py-1 text-[9px] font-medium text-slate-500">
-                Technical
+                {formatText(interviewData.interviewType)}
               </span>
 
               <span className="text-[10px] text-slate-400">
-                Question 1 / 10
+                {currentQuestion} / {totalQuestions}
               </span>
             </div>
 
@@ -63,12 +99,15 @@ function LiveInterview() {
               </p>
 
               <h2 className="mt-2 text-base font-semibold leading-6 text-slate-900">
-                Explain the difference between a process and a thread in an
-                operating system.
+                {interviewData.interviewType === "behavioral"
+                  ? "Tell me about a challenging situation you faced and how you handled it."
+                  : interviewData.interviewType === "mixed"
+                    ? "Explain a technical decision you made in one of your projects and why you chose that approach."
+                    : "Explain the difference between a process and a thread in an operating system."}
               </h2>
             </div>
 
-            {/* Answer Area */}
+            {/* Answer */}
             <div className="mt-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -77,18 +116,20 @@ function LiveInterview() {
                   </p>
 
                   <p className="mt-0.5 text-[10px] text-slate-400">
-                    Speak naturally and explain your answer clearly.
+                    Type your response or use voice input.
                   </p>
                 </div>
 
                 <span className="text-[10px] text-slate-400">
-                  0 / 500 words
+                  {answer.length} characters
                 </span>
               </div>
 
               <textarea
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
                 placeholder="Type your answer here..."
-                className="mt-3 h-36 w-full resize-none rounded-md border border-slate-200 bg-white px-3 py-2.5 text-xs text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
+                className="mt-3 h-36 w-full resize-none rounded-md border border-slate-200 bg-white px-3 py-2.5 text-xs leading-5 text-slate-700 outline-none placeholder:text-slate-300 focus:border-slate-400"
               />
             </div>
 
@@ -114,16 +155,24 @@ function LiveInterview() {
 
               <button
                 type="button"
-                className="rounded-md bg-slate-900 px-4 py-2 text-[10px] font-semibold text-white hover:bg-slate-800"
+                onClick={handleSubmit}
+                disabled={!answer.trim()}
+                className={`rounded-md px-4 py-2 text-[10px] font-semibold transition ${
+                  answer.trim()
+                    ? "bg-slate-900 text-white hover:bg-slate-800"
+                    : "cursor-not-allowed bg-slate-200 text-slate-400"
+                }`}
               >
-                Submit Answer →
+                {currentQuestion === totalQuestions
+                  ? "Finish Interview"
+                  : "Submit Answer →"}
               </button>
             </div>
           </section>
 
-          {/* Right Panel */}
+          {/* Sidebar */}
           <aside className="space-y-4">
-            {/* Interview Progress */}
+            {/* Progress */}
             <section className="rounded-lg border border-slate-200 bg-white p-4">
               <div className="flex items-center justify-between">
                 <div>
@@ -132,27 +181,35 @@ function LiveInterview() {
                   </h2>
 
                   <p className="mt-0.5 text-[10px] text-slate-400">
-                    1 of 10 questions completed
+                    {currentQuestion - 1} of {totalQuestions} completed
                   </p>
                 </div>
 
                 <span className="text-xs font-semibold text-slate-700">
-                  10%
+                  {progress}%
                 </span>
               </div>
 
               <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
-                <div className="h-full w-[10%] rounded-full bg-slate-900" />
+                <div
+                  className="h-full rounded-full bg-slate-900 transition-all"
+                  style={{ width: `${progress}%` }}
+                />
               </div>
 
               <div className="mt-4 grid grid-cols-5 gap-1.5">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => (
+                {Array.from(
+                  { length: totalQuestions },
+                  (_, index) => index + 1,
+                ).map((number) => (
                   <div
                     key={number}
                     className={`flex h-7 items-center justify-center rounded-md text-[9px] font-medium ${
-                      number === 1
+                      number < currentQuestion
                         ? "border border-slate-900 bg-slate-900 text-white"
-                        : "border border-slate-200 text-slate-400"
+                        : number === currentQuestion
+                          ? "border border-slate-900 bg-slate-50 text-slate-900"
+                          : "border border-slate-200 text-slate-400"
                     }`}
                   >
                     {number}
@@ -161,41 +218,39 @@ function LiveInterview() {
               </div>
             </section>
 
-            {/* Interview Tips */}
+            {/* Interview Details */}
             <section className="rounded-lg border border-slate-200 bg-white p-4">
               <h2 className="text-xs font-semibold text-slate-900">
-                Interview Tips
+                Interview Details
               </h2>
 
               <div className="mt-3 space-y-3">
-                <div>
-                  <p className="text-[10px] font-medium text-slate-700">
-                    Be structured
-                  </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400">Type</span>
 
-                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
-                    Start with the main concept, then explain details.
-                  </p>
+                  <span className="text-[10px] font-medium text-slate-700">
+                    {formatText(interviewData.interviewType)}
+                  </span>
                 </div>
 
-                <div>
-                  <p className="text-[10px] font-medium text-slate-700">
-                    Give examples
-                  </p>
+                <div className="h-px bg-slate-100" />
 
-                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
-                    Use a simple example whenever it helps clarify your answer.
-                  </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400">Difficulty</span>
+
+                  <span className="text-[10px] font-medium text-slate-700">
+                    {formatText(interviewData.difficulty)}
+                  </span>
                 </div>
 
-                <div>
-                  <p className="text-[10px] font-medium text-slate-700">
-                    Think before answering
-                  </p>
+                <div className="h-px bg-slate-100" />
 
-                  <p className="mt-0.5 text-[9px] leading-4 text-slate-400">
-                    Take a few seconds to organize your thoughts.
-                  </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] text-slate-400">Questions</span>
+
+                  <span className="text-[10px] font-medium text-slate-700">
+                    {totalQuestions}
+                  </span>
                 </div>
               </div>
             </section>
@@ -214,9 +269,7 @@ function LiveInterview() {
                     AI Interviewer
                   </p>
 
-                  <p className="text-[9px] text-slate-400">
-                    Listening and analyzing
-                  </p>
+                  <p className="text-[9px] text-slate-400">Ready</p>
                 </div>
 
                 <span className="ml-auto h-1.5 w-1.5 rounded-full bg-green-500" />

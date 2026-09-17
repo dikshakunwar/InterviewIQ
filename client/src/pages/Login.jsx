@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { apiRequest } from "../services/api";
 
 function Login() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ function Login() {
     email: "",
     password: "",
   });
-
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -19,13 +20,29 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Backend authentication will be connected later.
-    navigate("/dashboard");
-  };
+    try {
+      const data = await apiRequest("/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
+      console.log("Login successful:", data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      navigate("/dashboard");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <Navbar />

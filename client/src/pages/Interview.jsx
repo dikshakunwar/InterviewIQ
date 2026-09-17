@@ -1,13 +1,25 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function Interview() {
+  const navigate = useNavigate();
+
   const [interviewType, setInterviewType] = useState("technical");
   const [difficulty, setDifficulty] = useState("medium");
   const [questionCount, setQuestionCount] = useState("10");
 
-  const OptionCard = ({ value, selected, onClick, title, description }) => (
+  const handleStartInterview = () => {
+    navigate("/live-interview", {
+      state: {
+        interviewType,
+        difficulty,
+        questionCount,
+      },
+    });
+  };
+
+  const OptionCard = ({ selected, onClick, title, description }) => (
     <button
       type="button"
       onClick={onClick}
@@ -60,10 +72,11 @@ function Interview() {
             </p>
           </div>
 
-          {/* Content */}
+          {/* Main Content */}
           <div className="mt-5 grid gap-4 lg:grid-cols-3">
-            {/* Interview Type */}
+            {/* Settings */}
             <section className="rounded-lg border border-slate-200 bg-white p-4 lg:col-span-2">
+              {/* Interview Type */}
               <div>
                 <h2 className="text-sm font-semibold text-slate-900">
                   Interview Type
@@ -72,47 +85,43 @@ function Interview() {
                 <p className="mt-0.5 text-[10px] text-slate-400">
                   Choose the type of questions you want to practice.
                 </p>
-              </div>
 
-              <div className="mt-4 grid gap-2 sm:grid-cols-3">
-                <OptionCard
-                  value="technical"
-                  selected={interviewType === "technical"}
-                  onClick={() => setInterviewType("technical")}
-                  title="Technical"
-                  description="DSA, programming, CS fundamentals and technical concepts."
-                />
+                <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                  <OptionCard
+                    selected={interviewType === "technical"}
+                    onClick={() => setInterviewType("technical")}
+                    title="Technical"
+                    description="DSA, programming, CS fundamentals and technical concepts."
+                  />
 
-                <OptionCard
-                  value="behavioral"
-                  selected={interviewType === "behavioral"}
-                  onClick={() => setInterviewType("behavioral")}
-                  title="Behavioral"
-                  description="HR, teamwork, communication and situational questions."
-                />
+                  <OptionCard
+                    selected={interviewType === "behavioral"}
+                    onClick={() => setInterviewType("behavioral")}
+                    title="Behavioral"
+                    description="HR, teamwork, communication and situational questions."
+                  />
 
-                <OptionCard
-                  value="mixed"
-                  selected={interviewType === "mixed"}
-                  onClick={() => setInterviewType("mixed")}
-                  title="Mixed"
-                  description="A combination of technical and behavioral questions."
-                />
+                  <OptionCard
+                    selected={interviewType === "mixed"}
+                    onClick={() => setInterviewType("mixed")}
+                    title="Mixed"
+                    description="A combination of technical and behavioral questions."
+                  />
+                </div>
               </div>
 
               {/* Difficulty */}
-              <div className="mt-6">
+              <div className="mt-6 border-t border-slate-100 pt-6">
                 <h2 className="text-sm font-semibold text-slate-900">
                   Difficulty
                 </h2>
 
                 <p className="mt-0.5 text-[10px] text-slate-400">
-                  Select the difficulty level for your interview.
+                  Select the difficulty level.
                 </p>
 
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   <OptionCard
-                    value="easy"
                     selected={difficulty === "easy"}
                     onClick={() => setDifficulty("easy")}
                     title="Easy"
@@ -120,7 +129,6 @@ function Interview() {
                   />
 
                   <OptionCard
-                    value="medium"
                     selected={difficulty === "medium"}
                     onClick={() => setDifficulty("medium")}
                     title="Medium"
@@ -128,7 +136,6 @@ function Interview() {
                   />
 
                   <OptionCard
-                    value="hard"
                     selected={difficulty === "hard"}
                     onClick={() => setDifficulty("hard")}
                     title="Hard"
@@ -137,13 +144,13 @@ function Interview() {
                 </div>
               </div>
 
-              {/* Question Count */}
-              <div className="mt-6">
+              {/* Number of Questions */}
+              <div className="mt-6 border-t border-slate-100 pt-6">
                 <h2 className="text-sm font-semibold text-slate-900">
                   Number of Questions
                 </h2>
 
-                <div className="mt-3 flex gap-2">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {["5", "10", "15", "20"].map((count) => (
                     <button
                       key={count}
@@ -160,6 +167,25 @@ function Interview() {
                   ))}
                 </div>
               </div>
+
+              {/* Resume */}
+              <div className="mt-6 border-t border-slate-100 pt-6">
+                <div className="flex items-center justify-between rounded-md bg-slate-50 px-3 py-2.5">
+                  <div>
+                    <p className="text-xs font-medium text-slate-800">
+                      Resume context
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] text-slate-400">
+                      Your uploaded resume will be used for personalization.
+                    </p>
+                  </div>
+
+                  <span className="text-[10px] font-medium text-green-600">
+                    Ready
+                  </span>
+                </div>
+              </div>
             </section>
 
             {/* Summary */}
@@ -170,7 +196,7 @@ function Interview() {
                 </h2>
 
                 <p className="mt-0.5 text-[10px] text-slate-400">
-                  Your current configuration
+                  Current configuration
                 </p>
 
                 <div className="mt-4 space-y-3">
@@ -208,38 +234,27 @@ function Interview() {
                 </div>
               </section>
 
-              <section className="flex flex-1 flex-col justify-between rounded-lg bg-slate-900 p-4 text-white">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-800">
-                      <span className="text-[9px] font-bold">AI</span>
-                    </div>
-
-                    <span className="text-xs font-medium">AI Interview</span>
+              <section className="rounded-lg border border-slate-200 bg-white p-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
+                    <span className="text-[9px] font-bold text-slate-600">
+                      AI
+                    </span>
                   </div>
 
-                  <p className="mt-3 text-[10px] leading-4 text-slate-400">
-                    Your interview will use your selected configuration and
-                    resume information to personalize the experience.
-                  </p>
+                  <span className="text-xs font-medium text-slate-800">
+                    AI Interview
+                  </span>
                 </div>
 
-                <div className="mt-5 space-y-2">
-                  <div className="text-[10px] text-slate-400">
-                    ✓ Personalized questions
-                  </div>
-
-                  <div className="text-[10px] text-slate-400">
-                    ✓ Answer evaluation
-                  </div>
-
-                  <div className="text-[10px] text-slate-400">
-                    ✓ Performance feedback
-                  </div>
-                </div>
+                <p className="mt-3 text-[10px] leading-4 text-slate-400">
+                  Questions will later be personalized using your resume, role,
+                  interview type, and difficulty.
+                </p>
               </section>
 
-              <div className="flex gap-2">
+              {/* Actions */}
+              <div className="mt-auto flex gap-2">
                 <Link
                   to="/resume"
                   className="flex-1 rounded-md border border-slate-200 bg-white px-3 py-2.5 text-center text-[11px] font-medium text-slate-600 hover:bg-slate-50"
@@ -247,12 +262,13 @@ function Interview() {
                   Back
                 </Link>
 
-                <Link
-                  to="/live-interview"
-                  className="flex-[1.5] rounded-md bg-slate-900 px-3 py-2.5 text-center text-[11px] font-semibold text-white hover:bg-slate-800"
+                <button
+                  type="button"
+                  onClick={handleStartInterview}
+                  className="flex-[1.5] rounded-md bg-slate-900 px-3 py-2.5 text-[11px] font-semibold text-white hover:bg-slate-800"
                 >
                   Start Interview →
-                </Link>
+                </button>
               </div>
             </aside>
           </div>

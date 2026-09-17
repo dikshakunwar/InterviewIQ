@@ -1,341 +1,290 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 function Results() {
+  const location = useLocation();
+
+  const interviewData = location.state || {
+    interviewType: "technical",
+    difficulty: "medium",
+    questionCount: 10,
+  };
+
+  const scores = {
+    overall: 78,
+    technical: 84,
+    relevance: 81,
+    communication: 72,
+    completeness: 75,
+  };
+
+  const formatText = (value) => {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
 
-      <main className="min-h-screen bg-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-12 lg:px-8">
-          {/* Header */}
-          <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
-            <div>
-              <p className="text-sm font-medium text-slate-500">
-                Interview Results
-              </p>
+      <main className="mx-auto max-w-6xl px-5 py-6">
+        {/* Header */}
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+          <div>
+            <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+              Results
+            </p>
 
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-                Your interview performance
-              </h1>
+            <h1 className="mt-1 text-lg font-semibold">
+              Interview Performance
+            </h1>
 
-              <p className="mt-3 text-sm text-slate-600">
-                Frontend Developer · Technical Interview · Intermediate
-              </p>
-            </div>
-
-            <Link
-              to="/interview"
-              className="rounded-xl bg-slate-900 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              Practice Again
-            </Link>
+            <p className="mt-1 text-xs text-slate-500">
+              {formatText(interviewData.interviewType)} ·{" "}
+              {formatText(interviewData.difficulty)} ·{" "}
+              {interviewData.questionCount} questions
+            </p>
           </div>
 
-          {/* Overall Score */}
-          <section className="mt-10 rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-            <div className="grid gap-8 md:grid-cols-2 md:items-center">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                  Overall Score
-                </p>
+          <Link
+            to="/interview"
+            className="w-fit rounded-md bg-slate-900 px-4 py-2 text-[11px] font-semibold text-white hover:bg-slate-800"
+          >
+            Practice Again →
+          </Link>
+        </div>
 
-                <div className="mt-4 flex items-end gap-3">
-                  <span className="text-6xl font-bold tracking-tight text-slate-950">
-                    78
-                  </span>
-
-                  <span className="pb-2 text-xl font-medium text-slate-400">
-                    / 100
-                  </span>
-                </div>
-
-                <p className="mt-4 max-w-lg text-sm leading-6 text-slate-600">
-                  Good performance. You demonstrated a solid understanding of
-                  the concepts, but there are a few areas that can be improved
-                  before your next interview.
-                </p>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-500">Performance</span>
-
-                  <span className="text-sm font-semibold text-slate-900">
-                    78%
-                  </span>
-                </div>
-
-                <div className="mt-3 h-3 overflow-hidden rounded-full bg-slate-100">
-                  <div className="h-full w-[78%] rounded-full bg-slate-900" />
-                </div>
-
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <p className="text-xs text-slate-500">Questions</p>
-
-                    <p className="mt-2 text-xl font-bold text-slate-900">10</p>
-                  </div>
-
-                  <div className="rounded-2xl bg-slate-50 p-5">
-                    <p className="text-xs text-slate-500">Completed</p>
-
-                    <p className="mt-2 text-xl font-bold text-slate-900">
-                      10 / 10
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Category Scores */}
-          <section className="mt-8">
+        {/* Overall Score */}
+        <section className="mt-5 rounded-lg border border-slate-200 bg-white p-5">
+          <div className="grid gap-5 md:grid-cols-[1fr_1.5fr] md:items-center">
             <div>
-              <h2 className="text-xl font-bold text-slate-950">
-                Performance Breakdown
-              </h2>
+              <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
+                Overall Score
+              </p>
 
-              <p className="mt-1 text-sm text-slate-500">
-                See how you performed across different areas.
+              <div className="mt-2 flex items-baseline gap-1">
+                <span className="text-3xl font-semibold text-slate-900">
+                  {scores.overall}
+                </span>
+
+                <span className="text-xs text-slate-400">/ 100</span>
+              </div>
+
+              <p className="mt-2 text-xs leading-5 text-slate-500">
+                Good performance. You have a solid foundation with some areas
+                that can be improved.
               </p>
             </div>
 
-            <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <p className="text-sm text-slate-500">Technical Accuracy</p>
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-slate-400">
+                  Overall performance
+                </span>
 
-                <p className="mt-3 text-3xl font-bold text-slate-900">84%</p>
-
-                <div className="mt-4 h-2 rounded-full bg-slate-100">
-                  <div className="h-full w-[84%] rounded-full bg-slate-900" />
-                </div>
+                <span className="text-[10px] font-semibold text-slate-700">
+                  {scores.overall}%
+                </span>
               </div>
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <p className="text-sm text-slate-500">Relevance</p>
-
-                <p className="mt-3 text-3xl font-bold text-slate-900">81%</p>
-
-                <div className="mt-4 h-2 rounded-full bg-slate-100">
-                  <div className="h-full w-[81%] rounded-full bg-slate-900" />
-                </div>
+              <div className="mt-2 h-1.5 rounded-full bg-slate-100">
+                <div
+                  className="h-full rounded-full bg-slate-900"
+                  style={{ width: `${scores.overall}%` }}
+                />
               </div>
 
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <p className="text-sm text-slate-500">Communication</p>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-md bg-slate-50 p-3">
+                  <p className="text-[10px] text-slate-400">Questions</p>
 
-                <p className="mt-3 text-3xl font-bold text-slate-900">72%</p>
-
-                <div className="mt-4 h-2 rounded-full bg-slate-100">
-                  <div className="h-full w-[72%] rounded-full bg-slate-900" />
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6">
-                <p className="text-sm text-slate-500">Completeness</p>
-
-                <p className="mt-3 text-3xl font-bold text-slate-900">75%</p>
-
-                <div className="mt-4 h-2 rounded-full bg-slate-100">
-                  <div className="h-full w-[75%] rounded-full bg-slate-900" />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Strengths & Improvements */}
-          <section className="mt-8 grid gap-6 lg:grid-cols-2">
-            {/* Strengths */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-7">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
-                  <span className="text-sm font-bold text-slate-700">+</span>
-                </div>
-
-                <div>
-                  <h2 className="font-semibold text-slate-900">
-                    Your Strengths
-                  </h2>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    Areas where you performed well
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-4">
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Strong technical understanding
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    Your answers demonstrated a good understanding of the
-                    underlying technical concepts.
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    {interviewData.questionCount}
                   </p>
                 </div>
 
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Relevant examples
-                  </h3>
+                <div className="rounded-md bg-slate-50 p-3">
+                  <p className="text-[10px] text-slate-400">Interview Type</p>
 
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    You supported several answers with practical examples from
-                    your experience.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Good problem-solving approach
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    Your reasoning was generally structured and easy to follow.
+                  <p className="mt-1 text-sm font-semibold text-slate-800">
+                    {formatText(interviewData.interviewType)}
                   </p>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            {/* Improvements */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-7">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
-                  <span className="text-sm font-bold text-slate-700">↑</span>
-                </div>
-
-                <div>
-                  <h2 className="font-semibold text-slate-900">
-                    Areas to Improve
-                  </h2>
-
-                  <p className="mt-1 text-xs text-slate-500">
-                    Focus areas for your next interview
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-4">
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Be more concise
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    Some answers could be shorter and more directly focused on
-                    the question.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Explain trade-offs
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    When discussing technical decisions, explain why one
-                    approach is better than another.
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-                  <h3 className="text-sm font-semibold text-slate-900">
-                    Improve communication
-                  </h3>
-
-                  <p className="mt-2 text-xs leading-5 text-slate-500">
-                    Organize your answers with a clear beginning, explanation,
-                    and conclusion.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* AI Feedback */}
-          <section className="mt-8 rounded-3xl border border-slate-200 bg-slate-900 p-7 text-white sm:p-8">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800">
-                <span className="text-xs font-bold">AI</span>
-              </div>
-
-              <div>
-                <h2 className="font-semibold">AI Feedback</h2>
-
-                <p className="mt-1 text-xs text-slate-500">
-                  Personalized feedback from your interview
-                </p>
-              </div>
-            </div>
-
-            <p className="mt-6 max-w-4xl text-sm leading-7 text-slate-300">
-              Your overall performance indicates that you have a solid technical
-              foundation. Your strongest answers were the ones where you
-              explained the concept first and then supported it with a practical
-              example. For your next interview, focus on keeping answers
-              structured and concise while explaining your reasoning clearly.
-            </p>
-          </section>
-
-          {/* Next Steps */}
-          <section className="mt-8 rounded-3xl border border-slate-200 bg-white p-7 sm:p-8">
-            <h2 className="text-xl font-bold text-slate-950">
-              Recommended Next Steps
+        {/* Score Breakdown */}
+        <section className="mt-5">
+          <div>
+            <h2 className="text-sm font-semibold text-slate-900">
+              Performance Breakdown
             </h2>
 
-            <p className="mt-2 text-sm text-slate-500">
-              Keep improving with targeted practice.
+            <p className="mt-0.5 text-[10px] text-slate-400">
+              Your performance across key evaluation areas.
+            </p>
+          </div>
+
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["Technical Accuracy", scores.technical],
+              ["Relevance", scores.relevance],
+              ["Communication", scores.communication],
+              ["Completeness", scores.completeness],
+            ].map(([title, score]) => (
+              <div
+                key={title}
+                className="rounded-lg border border-slate-200 bg-white p-4"
+              >
+                <p className="text-[10px] text-slate-400">{title}</p>
+
+                <p className="mt-2 text-xl font-semibold text-slate-900">
+                  {score}%
+                </p>
+
+                <div className="mt-3 h-1 rounded-full bg-slate-100">
+                  <div
+                    className="h-full rounded-full bg-slate-900"
+                    style={{ width: `${score}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Strengths + Improvements */}
+        <section className="mt-5 grid gap-4 lg:grid-cols-2">
+          <div className="rounded-lg border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-semibold text-slate-900">Strengths</h2>
+
+            <p className="mt-0.5 text-[10px] text-slate-400">
+              Areas where your responses performed well.
             </p>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-3">
-              <Link
-                to="/interview"
-                className="rounded-2xl border border-slate-200 p-5 transition hover:border-slate-400 hover:shadow-sm"
-              >
-                <p className="text-sm font-semibold text-slate-900">
-                  Practice Again
+            <div className="mt-4 space-y-2">
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Strong technical foundation
                 </p>
 
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Take another interview and compare your performance.
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  You demonstrated a good understanding of the core concepts.
                 </p>
-              </Link>
+              </div>
 
-              <Link
-                to="/dashboard"
-                className="rounded-2xl border border-slate-200 p-5 transition hover:border-slate-400 hover:shadow-sm"
-              >
-                <p className="text-sm font-semibold text-slate-900">
-                  View Dashboard
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Relevant answers
                 </p>
 
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Track your overall interview preparation progress.
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  Most responses stayed focused on the question being asked.
                 </p>
-              </Link>
+              </div>
 
-              <Link
-                to="/history"
-                className="rounded-2xl border border-slate-200 p-5 transition hover:border-slate-400 hover:shadow-sm"
-              >
-                <p className="text-sm font-semibold text-slate-900">
-                  Interview History
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Practical examples
                 </p>
 
-                <p className="mt-2 text-xs leading-5 text-slate-500">
-                  Review your previous interview sessions.
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  You used practical examples to support your explanations.
                 </p>
-              </Link>
+              </div>
             </div>
-          </section>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-white p-4">
+            <h2 className="text-sm font-semibold text-slate-900">
+              Areas to Improve
+            </h2>
+
+            <p className="mt-0.5 text-[10px] text-slate-400">
+              Recommended areas for your next interview.
+            </p>
+
+            <div className="mt-4 space-y-2">
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Answer structure
+                </p>
+
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  Organize answers into a clear explanation, example, and
+                  conclusion.
+                </p>
+              </div>
+
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Technical depth
+                </p>
+
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  Add more technical reasoning and explain important trade-offs.
+                </p>
+              </div>
+
+              <div className="rounded-md bg-slate-50 p-3">
+                <p className="text-xs font-medium text-slate-800">
+                  Communication
+                </p>
+
+                <p className="mt-1 text-[10px] leading-4 text-slate-400">
+                  Keep explanations concise while clearly presenting the main
+                  idea.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AI Feedback */}
+        <section className="mt-4 rounded-lg border border-slate-200 bg-white p-4">
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100">
+              <span className="text-[9px] font-bold text-slate-600">AI</span>
+            </div>
+
+            <div>
+              <h2 className="text-sm font-semibold text-slate-900">
+                AI Feedback
+              </h2>
+
+              <p className="text-[9px] text-slate-400">
+                Personalized interview feedback
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-3 text-xs leading-5 text-slate-500">
+            Your performance shows a good technical foundation. Focus on
+            structuring your answers more clearly and providing concise
+            explanations supported by practical examples. The AI layer will
+            provide detailed feedback here once answer analysis is connected.
+          </p>
+        </section>
+
+        {/* Actions */}
+        <div className="mt-4 flex justify-end gap-2">
+          <Link
+            to="/history"
+            className="rounded-md border border-slate-200 bg-white px-4 py-2 text-[10px] font-medium text-slate-600 hover:bg-slate-50"
+          >
+            View History
+          </Link>
+
+          <Link
+            to="/interview"
+            className="rounded-md bg-slate-900 px-4 py-2 text-[10px] font-semibold text-white hover:bg-slate-800"
+          >
+            Start Another →
+          </Link>
         </div>
       </main>
-
-      <Footer />
-    </>
+    </div>
   );
 }
 

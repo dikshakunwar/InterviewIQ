@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { apiRequest } from "../services/api";
 
 function Register() {
   const navigate = useNavigate();
@@ -24,8 +25,10 @@ function Register() {
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match.");
@@ -37,8 +40,22 @@ function Register() {
       return;
     }
 
-    // Backend registration will be connected later.
-    navigate("/dashboard");
+    try {
+      const data = await apiRequest("/auth/register", {
+        method: "POST",
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      console.log("Registration successful:", data);
+
+      navigate("/login");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
